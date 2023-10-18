@@ -1,0 +1,14 @@
+﻿  console.cpp
+C:\Users\chudi\source\repos\Fluster Installer\Fluster Installer\console.cpp(1,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\chudi\source\repos\Fluster Installer\Fluster Installer\console.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  main.cpp
+C:\Users\chudi\source\repos\Fluster Installer\Fluster Installer\main.cpp(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\chudi\source\repos\Fluster Installer\Fluster Installer\console.cpp(1,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\chudi\source\repos\Fluster Installer\Fluster Installer\console.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\chudi\source\repos\Fluster Installer\Fluster Installer\main.cpp(11,9): warning C4311: 'type cast': pointer truncation from 'HINSTANCE' to 'int'
+C:\Users\chudi\source\repos\Fluster Installer\Fluster Installer\main.cpp(11,9): warning C4302: 'type cast': truncation from 'HINSTANCE' to 'int'
+  termcolor.hpp
+  Generating Code...
+main.obj : error LNK2005: "void __cdecl ErrorMessage(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?ErrorMessage@@YAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) already defined in console.obj
+main.obj : error LNK2005: "void __cdecl SuccessMessage(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?SuccessMessage@@YAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) already defined in console.obj
+C:\Users\chudi\source\repos\Fluster Installer\x64\Debug\Fluster Installer.exe : fatal error LNK1169: one or more multiply defined symbols found
