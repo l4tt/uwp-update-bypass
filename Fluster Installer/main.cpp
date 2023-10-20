@@ -4,9 +4,18 @@
 #include "console.h";
 #include "download.h";
 
-bool EnableDeveloperMode()
+bool SetDeveloperMode(bool enable)
 {
-    const wchar_t* command = L"-Command if ((Get-ItemPropertyValue -Path 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AppModelUnlock' -Name 'AllowDevelopmentWithoutDevLicense') -eq 1) { Write-Output 'Developer Mode is already enabled.' } else { Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AppModelUnlock' -Name 'AllowDevelopmentWithoutDevLicense' -Value 1; }";
+    const wchar_t* command;
+
+    if (enable)
+    {
+        command = L"-Command if ((Get-ItemPropertyValue -Path 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AppModelUnlock' -Name 'AllowDevelopmentWithoutDevLicense') -eq 1) { Write-Output 'Developer Mode is already enabled.' } else { Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AppModelUnlock' -Name 'AllowDevelopmentWithoutDevLicense' -Value 1; }";
+    }
+    else
+    {
+        command = L"-Command if ((Get-ItemPropertyValue -Path 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AppModelUnlock' -Name 'AllowDevelopmentWithoutDevLicense') -eq 0) { Write-Output 'Developer Mode is already disabled.' } else { Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AppModelUnlock' -Name 'AllowDevelopmentWithoutDevLicense' -Value 0; }";
+    }
 
     HINSTANCE result = ShellExecuteW(nullptr, L"open", L"powershell.exe", command, nullptr, SW_HIDE);
     if ((int)result > 32)
@@ -14,7 +23,6 @@ bool EnableDeveloperMode()
         return true;
     }
     return false;
-    
 }
 
 std::pair<bool, bool> IsFlusterInstalled(const std::string& dirPath, const std::string& fileName) {
@@ -59,11 +67,45 @@ bool DeleteDirectoryRecursively(const std::string& path) {
     return RemoveDirectoryA(path.c_str());
 }
 
+bool IsProcessRunningAsAdmin()
+{
+    BOOL isRunAsAdmin = FALSE;
+    PSID adminGroupSid = nullptr;
+
+    SID_IDENTIFIER_AUTHORITY NtAuthority = SECURITY_NT_AUTHORITY;
+    if (!AllocateAndInitializeSid(&NtAuthority, 2,
+        SECURITY_BUILTIN_DOMAIN_RID,
+        DOMAIN_ALIAS_RID_ADMINS,
+        0, 0, 0, 0, 0, 0,
+        &adminGroupSid))
+    {
+        return false;
+    }
+
+    if (!CheckTokenMembership(NULL, adminGroupSid, &isRunAsAdmin))
+    {
+        isRunAsAdmin = FALSE;
+    }
+
+    if (adminGroupSid)
+    {
+        FreeSid(adminGroupSid);
+    }
+
+    return isRunAsAdmin;
+}
+
 int main()
 {
     IntroMessage();
-    WarningMessage("Installer made by Nano - discord.gg/runesoftware");
+    WarningMessage("Installer made by Nano and edited by Pixeluted - discord.gg/runesoftware");
     WarningMessage("Big thanks to cereal for making uwp update bypasser!\n\n");
+
+    if (!IsProcessRunningAsAdmin()) {
+        ErrorMessage("Please run this installer as administrator!");
+        system("pause");
+        return 0;
+    }
 
     std::string url = "https://github.com/cerealwithmilk/uwp/releases/download/test/Fluster.msix";
     std::string fileName = "Windows10Universal.exe";
@@ -92,7 +134,7 @@ int main()
         }
     }
 
-    if (!EnableDeveloperMode())
+    if (!SetDeveloperMode(true))
     {
         ErrorMessage("Failed to enable Developer Mode.");
         system("pause");
@@ -108,6 +150,14 @@ int main()
     else {
         ErrorMessage("Failed to Download Fluster");
     }
+
+    if (!SetDeveloperMode(false)) {
+        ErrorMessage("Failed to disable Developer Mode.");
+    }
+    else {
+        SuccessMessage("Sucessfully disabled developer mode");
+    }
+
 
     system("pause");
 

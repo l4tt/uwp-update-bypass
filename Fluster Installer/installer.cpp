@@ -55,11 +55,6 @@ bool DownloadFileToCDrive(const std::string& url, const std::string& destination
     DWORD totalBytesRead = 0;
     double totalMB = fileSize / (1024.0 * 1024.0);
 
-    if (!CreateDirectoryA(destinationDir.c_str(), nullptr) && GetLastError() != ERROR_ALREADY_EXISTS) {
-        ErrorMessage("Looks like you already have fluster installed, please delete the path: ");
-        return false;
-    }
-
     std::ofstream outputFile(destinationPath, std::ios::binary);
     if (!outputFile) {
         ErrorMessage("Failed to create or open the destination file.");
