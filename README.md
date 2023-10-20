@@ -2,6 +2,17 @@
 this project made to open source the fluster installer in c++, credits one of our devs of rune his github is https://github.com/cerealwithmilk/uwp
 <br>here is a YT video on using the C# installer https://www.youtube.com/watch?v=EjPkiJnjjyA if you want an example of this working<br><br>
 
+### example
+[![Example](https://img.youtube.com/vi/BQ-WsBOkGAA/hqdefault.jpg)]([https://youtu.be/T-D1KVIuvjA](https://www.youtube.com/watch?v=BQ-WsBOkGAA))
+
+
+### updates
+- Added Mouse fix support
+- Added Download Progress bar
+- Added Extraction Progress bar
+- Added Fluster installed detection
+
+
 ### what is fluster?
 fluster is a patched version of roblox that spoofs the current version of roblox to look like the latest version but instead it's an older version of roblox allowing users to play on a non byfron client version
 this means you can use executors on this version. <br><br>
