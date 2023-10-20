@@ -3,7 +3,8 @@ this project made to open source the fluster installer in c++, credits one of ou
 <br>here is a YT video on using the C# installer https://www.youtube.com/watch?v=EjPkiJnjjyA if you want an example of this working<br><br>
 
 ### example
-[![Example](https://img.youtube.com/vi/BQ-WsBOkGAA/hqdefault.jpg)]([https://youtu.be/T-D1KVIuvjA](https://www.youtube.com/watch?v=BQ-WsBOkGAA))
+[![Watch the video](https://img.youtube.com/vi/BQ-WsBOkGAA/hqdefault.jpg)](https://www.youtube.com/watch?v=BQ-WsBOkGAA)
+
 
 
 ### updates
