@@ -2,6 +2,10 @@
 this project made to open source the fluster installer in c++, credits one of our devs of rune his github is https://github.com/cerealwithmilk/uwp
 <br>here is a YT video on using the C# installer https://www.youtube.com/watch?v=EjPkiJnjjyA if you want an example of this working<br><br>
 
+### discord
+Rune is a upcoming Web version executor come join our community
+https://discord.gg/runesoftware
+
 ### example
 [![Watch the video](https://img.youtube.com/vi/BQ-WsBOkGAA/hqdefault.jpg)](https://www.youtube.com/watch?v=BQ-WsBOkGAA)
 
