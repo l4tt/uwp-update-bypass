@@ -8,6 +8,22 @@
 #include <Shlobj.h>
 #include <Shlwapi.h>
 #include <iomanip>
+#include <filesystem>
+#include <iostream>
+#include <chrono>
+#include <thread>
+
+bool directoryExists(const std::string& path) {
+    struct stat info;
+    if (stat(path.c_str(), &info) != 0) {
+        return false;
+    }
+    else if (info.st_mode & S_IFDIR) {
+        return true;
+    }
+    return false;
+}
+
 
 void ShowProgressBar(double percent, double downloadedMB, double totalMB) {
     const int barWidth = 50;
@@ -97,11 +113,16 @@ bool DownloadFileToCDrive(const std::string& url, const std::string& destination
 
 bool AddAppxPackage(const std::string& appxManifestPath) {
 
-    std::wstring addAppxCommand = L"powershell -Command \"Add-AppxPackage -path '" + std::wstring(appxManifestPath.begin(), appxManifestPath.end()) + L"' -register\"";
+    std::wstring addAppxCommand = L"powershell -Command \"Add-AppxPackage -pat\h '" + std::wstring(appxManifestPath.begin(), appxManifestPath.end()) + L"' -register\"";
 
     HINSTANCE result = ShellExecuteW(nullptr, L"open", L"powershell.exe", addAppxCommand.c_str(), nullptr, SW_HIDE);
 
     if ((int)result > 32) {
+        WarningMessage("Waiting for package data...");
+        while (!directoryExists("C:\\Fluster\\microsoft.system.package.metadata")) {
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+        }
+
         SuccessMessage("Installed Fluster, Type Fluster in your application bar");
         return true;
     }
