@@ -1,25 +1,17 @@
-# uwp-update-bypass
-this project made to open source the fluster installer in c++, credits one of our devs of rune his github is https://github.com/cerealwithmilk/uwp
-<br>here is a YT video on using the C# installer https://www.youtube.com/watch?v=EjPkiJnjjyA if you want an example of this working<br><br>
+# Fluster Installer
+This project is made by Nano and Pixeluted.
 
-### discord
-Rune is a upcoming Web version executor come join our community
-https://discord.gg/runesoftware
+This installer installs a patched version of roblox UWP, that means that you will be playing on a version without hyperion (allowing you to exploit) 
 
-### example
-[![Watch the video](https://img.youtube.com/vi/BQ-WsBOkGAA/hqdefault.jpg)](https://www.youtube.com/watch?v=BQ-WsBOkGAA)
+Everything is possible because of cerealwithmilk that created this patched version, you can find his github [here](https://github.com/cerealwithmilk/uwp)
 
+### How is this possible?
+Fluster works by spoofing the version headers, to trick roblox thinking into you are playing latest UWP version.
 
+### What executors to use?
+We recommend Electron, you can download it [here](https://ryos.lol)
+You could also use fluxus, but you need modded version of it.
 
-### updates
-- Added Mouse fix support
-- Added Download Progress bar
-- Added Extraction Progress bar
-- Added Fluster installed detection
-
-
-### what is fluster?
-fluster is a patched version of roblox that spoofs the current version of roblox to look like the latest version but instead it's an older version of roblox allowing users to play on a non byfron client version
-this means you can use executors on this version. <br><br>
-
-<img src="https://cdn.discordapp.com/attachments/1158980830165745674/1164325048182640731/image.png?ex=6542cd33&is=65305833&hm=d26acc6e6d70b24662d537ce716e9a6dabb1cd2d5afb50fdca2475e27434bdce&"></img>
+### Discord Support
+If you need help with this installer or want to report a issue, please join this discord server https://discord.gg/runesoftware
+Preferably DM Pixeluted as he will be the fastest to respond.
