@@ -24,6 +24,36 @@ bool directoryExists(const std::string& path) {
     return false;
 }
 
+bool RunCommand(const std::wstring& cmd, DWORD& exitCode) {
+    STARTUPINFO si = {};
+    PROCESS_INFORMATION pi = {};
+    si.cb = sizeof(si);
+
+    std::wstring cmdMutable = cmd;
+
+    if (!CreateProcessW(
+        nullptr,
+        &cmdMutable[0],
+        nullptr,
+        nullptr,
+        FALSE,
+        0,
+        nullptr,
+        nullptr,
+        &si,
+        &pi)) {
+        return false;
+    }
+
+    WaitForSingleObject(pi.hProcess, INFINITE);
+
+    BOOL result = GetExitCodeProcess(pi.hProcess, &exitCode);
+
+    CloseHandle(pi.hProcess);
+    CloseHandle(pi.hThread);
+
+    return (result == TRUE);
+}
 
 void ShowProgressBar(double percent, double downloadedMB, double totalMB) {
     const int barWidth = 50;
@@ -44,6 +74,23 @@ void ShowProgressBar(double percent, double downloadedMB, double totalMB) {
 }
 
 bool DownloadFileToCDrive(const std::string& url, const std::string& destinationDir) {
+
+    DWORD resultCode = 0;
+    std::wstring removeExistingPackagesCode = L"powershell -Command Get-AppxPackage ROBLOXCORPORATION.ROBLOX.* | Remove-AppPackage";
+    BOOL codeResult = RunCommand(removeExistingPackagesCode, resultCode);
+
+    if (codeResult) {
+        if (resultCode != 0) {
+            ErrorMessage("Failed to remove existing fluster application!");
+            printf("%ld \n", resultCode);
+            return false;
+        }
+    }
+    else {
+        ErrorMessage("Failed to remove existing fluster application!");
+        return false;
+    }
+
     HINTERNET hInternet, hConnect;
     DWORD bytesRead;
     std::string fileName = url.substr(url.find_last_of("/") + 1);
@@ -115,15 +162,22 @@ bool AddAppxPackage(const std::string& appxManifestPath) {
 
     std::wstring addAppxCommand = L"powershell -Command \"Add-AppxPackage -pat\h '" + std::wstring(appxManifestPath.begin(), appxManifestPath.end()) + L"' -register\"";
 
-    HINSTANCE result = ShellExecuteW(nullptr, L"open", L"powershell.exe", addAppxCommand.c_str(), nullptr, SW_HIDE);
+    DWORD resultCode = 0;
+    BOOL result = RunCommand(addAppxCommand, resultCode);
 
-    if ((int)result > 32) {
-        WarningMessage("Waiting for package data...");
-        while (!directoryExists("C:\\Fluster\\microsoft.system.package.metadata")) {
-            std::this_thread::sleep_for(std::chrono::seconds(1));
+    if (result) {
+        if (resultCode == 0) {
+            WarningMessage("Waiting for package data...");
+            while (!directoryExists("C:\\Fluster\\microsoft.system.package.metadata")) {
+                std::this_thread::sleep_for(std::chrono::seconds(1));
+            }
+
+            SuccessMessage("Installed Fluster, Type Fluster in your application bar");
         }
-
-        SuccessMessage("Installed Fluster, Type Fluster in your application bar");
+        else {
+            ErrorMessage("Failed to register fluster app! Please make sure developer mode is enabled! ");
+            return false;
+        }
         return true;
     }
     else {
