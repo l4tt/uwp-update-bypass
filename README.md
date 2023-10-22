@@ -6,7 +6,7 @@ This installer installs a patched version of roblox UWP, that means that you wil
 Everything is possible because of cerealwithmilk that created this patched version, you can find his github [here](https://github.com/cerealwithmilk/uwp)
 
 ### How is this possible?
-Fluster works by spoofing the version headers, to trick roblox thinking into you are playing latest UWP version.
+Fluster works by spoofing the version headers, to trick roblox into thinking that you are playing latest UWP version.
 
 ### What executors to use?
 We recommend Electron, you can download it [here](https://ryos.lol)
