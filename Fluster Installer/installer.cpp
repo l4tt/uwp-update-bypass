@@ -1,17 +1,4 @@
-#include "download.h"
-#include <iostream>
-#include <string>
-#include <fstream>
-#include <Windows.h>
-#include <wininet.h>
-#include "console.h"
-#include <Shlobj.h>
-#include <Shlwapi.h>
-#include <iomanip>
-#include <filesystem>
-#include <iostream>
-#include <chrono>
-#include <thread>
+#include "installer.h"
 
 bool directoryExists(const std::string& path) {
     struct stat info;
@@ -211,7 +198,7 @@ bool ExtractZipFile(const std::string& zipFilePath, const std::string& extractPa
         if (DeleteFileW(std::wstring(zipFilePath.begin(), zipFilePath.end()).c_str())) {
             delete[] commandLineNonConst;
             
-            AddAppxPackage(extractPath + "\\AppxManifest.xml");
+            return AddAppxPackage(extractPath + "\\AppxManifest.xml");
         }
         else {
             delete[] commandLineNonConst;

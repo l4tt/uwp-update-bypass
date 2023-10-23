@@ -1,26 +1,48 @@
 #include <iostream>
 #include <Windows.h>
 #include <Shellapi.h>
+#include <VersionHelpers.h>
 #include "console.h";
-#include "download.h";
+#include "installer.h"
 
 bool SetDeveloperMode(bool enable)
 {
+
+    if (IsWindowsVersionOrGreater(10, 0, 0)) {
+        // Windows 10
+
+        if (enable == TRUE) {
+            WarningMessage("You are on Windows 10, please make sure you enabled developer mode!");
+            system("pause");
+            return true;
+        }
+        else {
+            return true;
+        }
+    }
+
     const wchar_t* command;
+
 
     if (enable)
     {
-        command = L"-Command if ((Get-ItemPropertyValue -Path 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AppModelUnlock' -Name 'AllowDevelopmentWithoutDevLicense') -eq 1) { Write-Output 'Developer Mode is already enabled.' } else { Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AppModelUnlock' -Name 'AllowDevelopmentWithoutDevLicense' -Value 1; }";
+        command = L"powershell -Command if ((Get-ItemPropertyValue -Path 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AppModelUnlock' -Name 'AllowDevelopmentWithoutDevLicense') -eq 1) { Write-Output 'Developer Mode is already enabled.' } else { Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AppModelUnlock' -Name 'AllowDevelopmentWithoutDevLicense' -Value 1; }";
     }
     else
     {
-        command = L"-Command if ((Get-ItemPropertyValue -Path 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AppModelUnlock' -Name 'AllowDevelopmentWithoutDevLicense') -eq 0) { Write-Output 'Developer Mode is already disabled.' } else { Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AppModelUnlock' -Name 'AllowDevelopmentWithoutDevLicense' -Value 0; }";
+        command = L"powershell -Command if ((Get-ItemPropertyValue -Path 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AppModelUnlock' -Name 'AllowDevelopmentWithoutDevLicense') -eq 0) { Write-Output 'Developer Mode is already disabled.' } else { Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AppModelUnlock' -Name 'AllowDevelopmentWithoutDevLicense' -Value 0; }";
     }
 
-    HINSTANCE result = ShellExecuteW(nullptr, L"open", L"powershell.exe", command, nullptr, SW_HIDE);
-    if ((int)result > 32)
+    DWORD resultCode = 0;
+    BOOL result = RunCommand(command, resultCode);
+    if (result)
     {
-        return true;
+        if (resultCode != 0) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
     return false;
 }
