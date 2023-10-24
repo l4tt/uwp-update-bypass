@@ -1,3 +1,5 @@
+# AS OF 10/24/2023, THE UWP VERSION HAS BEEN PATCHED, PLEASE WAIT UNTIL IT GETS UNPATCHED
+
 # Fluster Installer
 This project is made by Nano and Pixeluted.
 
