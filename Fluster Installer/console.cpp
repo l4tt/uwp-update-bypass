@@ -18,8 +18,8 @@ void IntroMessage() {
 	|______ |      |     | |______    |    |______ |_____/   
 	|       |_____ |_____| ______|    |    |______ |    \_  
 )";
-	std::string Version = "\n		  Version: 1.4 ";
-	std::string RobloxVersion = " Roblox: 2.597.663";
+	std::string Version = "\n		  Version: 1.5 ";
+	std::string RobloxVersion = " Roblox: 2.598.613";
 
 
 	std::cout << termcolor::blue << Intro << termcolor::yellow << Version << termcolor::green << RobloxVersion << termcolor::reset << "\n\n";

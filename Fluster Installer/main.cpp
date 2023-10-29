@@ -5,48 +5,6 @@
 #include "console.h";
 #include "installer.h"
 
-bool SetDeveloperMode(bool enable)
-{
-
-    if (IsWindowsVersionOrGreater(10, 0, 0)) {
-        // Windows 10
-
-        if (enable == TRUE) {
-            WarningMessage("You are on Windows 10, please make sure you enabled developer mode!");
-            system("pause");
-            return true;
-        }
-        else {
-            return true;
-        }
-    }
-
-    const wchar_t* command;
-
-
-    if (enable)
-    {
-        command = L"powershell -Command if ((Get-ItemPropertyValue -Path 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AppModelUnlock' -Name 'AllowDevelopmentWithoutDevLicense') -eq 1) { Write-Output 'Developer Mode is already enabled.' } else { Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AppModelUnlock' -Name 'AllowDevelopmentWithoutDevLicense' -Value 1; }";
-    }
-    else
-    {
-        command = L"powershell -Command if ((Get-ItemPropertyValue -Path 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AppModelUnlock' -Name 'AllowDevelopmentWithoutDevLicense') -eq 0) { Write-Output 'Developer Mode is already disabled.' } else { Set-ItemProperty -Path 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AppModelUnlock' -Name 'AllowDevelopmentWithoutDevLicense' -Value 0; }";
-    }
-
-    DWORD resultCode = 0;
-    BOOL result = RunCommand(command, resultCode);
-    if (result)
-    {
-        if (resultCode != 0) {
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
-    return false;
-}
-
 std::pair<bool, bool> IsFlusterInstalled(const std::string& dirPath, const std::string& fileName) {
     bool dirExists = false;
     bool fileExists = false;
@@ -123,9 +81,8 @@ int main()
     WarningMessage("Installer made by Nano and edited by Pixeluted - discord.gg/runesoftware");
     WarningMessage("Big thanks to cereal for making uwp update bypasser!\n\n");
 
-    ErrorMessage("Fluster is patched as of right now! Please wait until it gets unpatched, if you want to get notification join discord server discord.gg/runesoftware");
+    WarningMessage("Before you continue, make sure to enable developer mode!");
     system("pause");
-    return 0;
 
     if (!IsProcessRunningAsAdmin()) {
         ErrorMessage("Please run this installer as administrator!");
@@ -133,7 +90,7 @@ int main()
         return 0;
     }
 
-    std::string url = "https://github.com/cerealwithmilk/uwp/releases/download/test/Fluster.msix";
+    std::string url = "https://github.com/l4tt/uwp-update-bypass/releases/download/1.5/Fluster.msix";
     std::string fileName = "Windows10Universal.exe";
     std::string destinationDir = "C:\\Fluster";
 
@@ -160,30 +117,12 @@ int main()
         }
     }
 
-    if (!SetDeveloperMode(true))
-    {
-        ErrorMessage("Failed to enable Developer Mode.");
-        system("pause");
-        return 0;
-
-    }
-
-    SuccessMessage("Sucessfully enabled developer mode");
-
     if (DownloadFileToCDrive(url, destinationDir)) {
         SuccessMessage("Thank you for using Fluster - Rune on top / Byfron == Bad");
     }
     else {
         ErrorMessage("Failed to Download Fluster");
     }
-
-    if (!SetDeveloperMode(false)) {
-        ErrorMessage("Failed to disable Developer Mode.");
-    }
-    else {
-        SuccessMessage("Sucessfully disabled developer mode");
-    }
-
 
     system("pause");
 
