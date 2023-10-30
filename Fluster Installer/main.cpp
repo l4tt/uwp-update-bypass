@@ -81,9 +81,7 @@ int main()
     WarningMessage("Installer made by Nano and edited by Pixeluted - discord.gg/runesoftware");
     WarningMessage("Big thanks to cereal for making uwp update bypasser!\n\n");
 
-    ErrorMessage("Fluster is patched (It doesn't work) wait for update, go outside kid");
-    system("pause");
-    return 0;
+    WarningMessage("Fluster requires the UWP Update Required prompt bypasser, please make sure to use the fiddler bypass.");
 
     if (!IsProcessRunningAsAdmin()) {
         ErrorMessage("Please run this installer as administrator!");
