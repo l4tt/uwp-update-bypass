@@ -1,3 +1,5 @@
+# FLUSTER IS PATCHED
+
 # Fluster Installer
 This project is made by Nano and Pixeluted.
 
