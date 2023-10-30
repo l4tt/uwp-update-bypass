@@ -81,8 +81,9 @@ int main()
     WarningMessage("Installer made by Nano and edited by Pixeluted - discord.gg/runesoftware");
     WarningMessage("Big thanks to cereal for making uwp update bypasser!\n\n");
 
-    WarningMessage("Before you continue, make sure to enable developer mode!");
+    ErrorMessage("Fluster is patched (It doesn't work) wait for update, go outside kid");
     system("pause");
+    return 0;
 
     if (!IsProcessRunningAsAdmin()) {
         ErrorMessage("Please run this installer as administrator!");
