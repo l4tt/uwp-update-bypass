@@ -1,5 +1,5 @@
 # FLUSTER IS PATCHED
-https://runesoftware.cc
+https://discord.gg/vision
 # Fluster Installer
 This project is made by Nano and Pixeluted.
 
